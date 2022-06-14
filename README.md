@@ -1,0 +1,2 @@
+# gqlgen-practice
+Golang、GraphQL
