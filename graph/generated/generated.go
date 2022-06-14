@@ -240,6 +240,7 @@ type Query {
 input NewTodo {
   text: String!
   userId: String!
+  userDone: Boolean
 }
 
 type Mutation {
@@ -2634,6 +2635,14 @@ func (ec *executionContext) unmarshalInputNewTodo(ctx context.Context, obj inter
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
 			it.UserID, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "userDone":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userDone"))
+			it.UserDone, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}

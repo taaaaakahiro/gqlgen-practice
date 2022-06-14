@@ -14,6 +14,7 @@ import (
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
 	todo := &model.Todo{
 		Text: input.Text,
+		// Done: input.UserDone,
 		ID:   fmt.Sprintf("T%d", rand.Int()),
 		User: &model.User{ID: input.UserID, Name: "user " + input.UserID},
 	}
@@ -23,7 +24,6 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	return r.todos, nil
-
 }
 
 // Mutation returns generated.MutationResolver implementation.
