@@ -11,7 +11,7 @@ go run server.go
 go version go1.18.3 darwin/arm64
 ```
 
-### URL
+### URL for GraphQL playground
     http://localhost:8080/
 
 ### Reference
