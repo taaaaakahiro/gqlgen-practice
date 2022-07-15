@@ -12,10 +12,8 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: root_password
-          MYSQL_DATABASE: foo
-          MYSQL_USER: user1
-          MYSQL_PASSWORD: user1_password
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: ibl
         options: >-
           --health-cmd "mysqladmin ping"
           --health-interval 10s
@@ -25,7 +23,5 @@ jobs:
       - name: Show Docker containers
         run: docker ps -a
       - name: Show databases for root user
-        run: mysql --protocol=tcp -h localhost -P 3306 -u root -proot_password -e "SHOW DATABASES"
-      - name: Show databases for user1
-        run: mysql --protocol=tcp -h localhost -P 3306 -u user1 -puser1_password -e "SHOW DATABASES"
+        run: mysql --protocol=tcp -h localhost -P 3306 -u root -ppassword -e "SHOW DATABASES"
 
