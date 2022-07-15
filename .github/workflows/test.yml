@@ -24,6 +24,8 @@ jobs:
         run: docker ps -a
       - name: Show databases for root user
         run: mysql --protocol=tcp -h localhost -P 3306 -u root -ppassword -e "SHOW DATABASES"
-      - name: Check secrets
-        run: echo ${{ secrets.TEST_TOKEN }}5555555
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: echo secrets
+        run: echo ${{ secrets.TEST_TOKEN }}
 
