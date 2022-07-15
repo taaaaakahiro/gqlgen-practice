@@ -27,5 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: echo secrets
-        run: echo ${{ secrets.TEST_TOKEN }}
+        run: 
+          echo ${{ env.TEST_TOKEN }}
+          echo ${{ secrets.TEST_TOKEN }}
 
