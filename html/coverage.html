@@ -1,0 +1,681 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>graph: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/Fantamstick/srn-ibl-student-server/pkg/graph/schema.resolvers.go (43.9%)</option>
+				
+				<option value="file1">github.com/Fantamstick/srn-ibl-student-server/pkg/infrastructure/persistence/course.go (0.0%)</option>
+				
+				<option value="file2">github.com/Fantamstick/srn-ibl-student-server/pkg/infrastructure/persistence/drill.go (88.2%)</option>
+				
+				<option value="file3">github.com/Fantamstick/srn-ibl-student-server/pkg/infrastructure/persistence/file.go (0.0%)</option>
+				
+				<option value="file4">github.com/Fantamstick/srn-ibl-student-server/pkg/infrastructure/persistence/persistence.go (0.0%)</option>
+				
+				<option value="file5">github.com/Fantamstick/srn-ibl-student-server/pkg/infrastructure/persistence/school_course.go (0.0%)</option>
+				
+				<option value="file6">github.com/Fantamstick/srn-ibl-student-server/pkg/infrastructure/persistence/school_rubric.go (0.0%)</option>
+				
+				<option value="file7">github.com/Fantamstick/srn-ibl-student-server/pkg/server/server.go (85.7%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">no coverage</span>
+				<span class="cov1">low coverage</span>
+				<span class="cov2">*</span>
+				<span class="cov3">*</span>
+				<span class="cov4">*</span>
+				<span class="cov5">*</span>
+				<span class="cov6">*</span>
+				<span class="cov7">*</span>
+				<span class="cov8">*</span>
+				<span class="cov9">*</span>
+				<span class="cov10">high coverage</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package graph
+
+// This file will be automatically regenerated based on the schema, any resolver implementations
+// will be copied through when generating and any unknown code will be moved to the end.
+
+import (
+        "context"
+        "fmt"
+
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/entity"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/model"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/graph/generated"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/graph/loader"
+)
+
+func (r *courseResolver) Icon(ctx context.Context, obj *model.Course) (*model.File, error) <span class="cov0" title="0">{
+        iconFile, err := loader.LoadFileByFileID(ctx, obj.IconFileID)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return iconFile, nil</span>
+}
+
+func (r *courseResolver) Children(ctx context.Context, obj *model.Course) ([]*model.CourseChildren, error) <span class="cov0" title="0">{
+        panic(fmt.Errorf("not implemented"))</span>
+}
+
+func (r *courseResolver) SchoolCourse(ctx context.Context, obj *model.Course) (*model.SchoolCourse, error) <span class="cov0" title="0">{
+        schoolCourse, err := loader.LoadSchoolCourseByCourseID(ctx, obj.ID)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return schoolCourse, nil</span>
+}
+
+func (r *queryResolver) Courses(ctx context.Context) ([]*model.Course, error) <span class="cov0" title="0">{
+        return r.Repositories.Course.ListCourses()
+}</span>
+
+func (r *queryResolver) Drill(ctx context.Context, unitID string) (*model.Drill, error) <span class="cov7" title="3">{
+        ent, err := r.Repositories.Drill.GetDrill(unitID)
+        if err != nil </span><span class="cov1" title="1">{
+                return nil, err
+        }</span>
+
+        <span class="cov4" title="2">var drill *model.Drill
+        isRandom := entity.ConvToBool(ent.IsRandom)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov4" title="2">var qs []*model.Question
+        for _, question := range ent.Questions </span><span class="cov7" title="3">{
+                var as []*model.Answer
+                for _, answer := range question.Answers </span><span class="cov10" title="5">{
+                        a := &amp;model.Answer{
+                                Text:    answer.Text,
+                                Correct: answer.Correct,
+                        }
+                        as = append(as, a)
+                }</span>
+                <span class="cov7" title="3">f := &amp;model.File{
+                        ID:          "", // TODO ファイル取得API実装完了後に対応
+                        Name:        "", // TODO ファイル取得API実装完了後に対応
+                        ContentType: "", // TODO ファイル取得API実装完了後に対応
+                        Path:        "", // TODO ファイル取得API実装完了後に対応
+                }
+                q := &amp;model.Question{
+                        Question:    question.Question,
+                        Icon:        f,
+                        Answers:     as,
+                        Description: question.Description,
+                }
+                qs = append(qs, q)
+                drill = &amp;model.Drill{
+                        ID:        ent.Id,
+                        IsRandom:  isRandom,
+                        Title:     ent.Title,
+                        Questions: qs,
+                }</span>
+        }
+
+        <span class="cov4" title="2">return drill, nil</span>
+}
+
+func (r *schoolCourseResolver) SchoolRubrics(ctx context.Context, obj *model.SchoolCourse) ([]*model.SchoolRubric, error) <span class="cov0" title="0">{
+        schoolRubrics, err := loader.LoadSchoolRubricsBySchoolCourseID(ctx, obj.ID)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return schoolRubrics, nil</span>
+}
+
+func (r *schoolRubricResolver) Badge(ctx context.Context, obj *model.SchoolRubric) (*model.File, error) <span class="cov0" title="0">{
+        badgeFile, err := loader.LoadFileByFileID(ctx, obj.BadgeFileID)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return badgeFile, nil</span>
+}
+
+// Course returns generated.CourseResolver implementation.
+func (r *Resolver) Course() generated.CourseResolver <span class="cov0" title="0">{ return &amp;courseResolver{r} }</span>
+
+// Query returns generated.QueryResolver implementation.
+func (r *Resolver) Query() generated.QueryResolver <span class="cov7" title="3">{ return &amp;queryResolver{r} }</span>
+
+// SchoolCourse returns generated.SchoolCourseResolver implementation.
+func (r *Resolver) SchoolCourse() generated.SchoolCourseResolver <span class="cov0" title="0">{ return &amp;schoolCourseResolver{r} }</span>
+
+// SchoolRubric returns generated.SchoolRubricResolver implementation.
+func (r *Resolver) SchoolRubric() generated.SchoolRubricResolver <span class="cov0" title="0">{ return &amp;schoolRubricResolver{r} }</span>
+
+type courseResolver struct{ *Resolver }
+type queryResolver struct{ *Resolver }
+type schoolCourseResolver struct{ *Resolver }
+type schoolRubricResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *schoolRubricResolver) Items(ctx context.Context, obj *model.SchoolRubric) ([]*model.RubricItem, error) <span class="cov0" title="0">{
+        // TODO: m_rubric_itemsの詳細分かり次第実装
+        panic(fmt.Errorf("not implemented"))</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package persistence
+
+import (
+        "database/sql"
+
+        errs "github.com/pkg/errors"
+
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/model"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/repository"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/io"
+)
+
+type CourseRepository struct {
+        database *io.SQLDatabase
+}
+
+var _ repository.ICourseRepository = (*CourseRepository)(nil)
+
+func NewCourseRepository(db *io.SQLDatabase) *CourseRepository <span class="cov0" title="0">{
+        return &amp;CourseRepository{
+                database: db,
+        }
+}</span>
+
+func (r CourseRepository) ListCourses() ([]*model.Course, error) <span class="cov0" title="0">{
+        query := `
+SELECT
+        id,
+        name,
+        icon_file_id,
+        description
+FROM
+        m_courses
+WHERE
+        status != 0
+ORDER BY
+        id;
+;`
+        stmtOut, err := r.database.Prepare(query)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, errs.WithStack(err)
+        }</span>
+        <span class="cov0" title="0">defer stmtOut.Close()
+
+        rows, err := stmtOut.Query()
+        if err != nil </span><span class="cov0" title="0">{
+                switch err </span>{
+                case sql.ErrNoRows:<span class="cov0" title="0">
+                        break</span>
+                default:<span class="cov0" title="0">
+                        return nil, errs.WithStack(err)</span>
+                }
+        }
+
+        <span class="cov0" title="0">courses := make([]*model.Course, 0)
+        for rows.Next() </span><span class="cov0" title="0">{
+                course := model.Course{}
+                // TODO: field後で調整
+                err = rows.Scan(&amp;course.ID, &amp;course.Name, &amp;course.IconFileID, &amp;course.Description)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, errs.WithStack(err)
+                }</span>
+
+                <span class="cov0" title="0">courses = append(courses, &amp;course)</span>
+        }
+        <span class="cov0" title="0">if err = rows.Err(); err != nil </span><span class="cov0" title="0">{
+                return nil, errs.WithStack(err)
+        }</span>
+        <span class="cov0" title="0">return courses, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package persistence
+
+import (
+        "encoding/json"
+
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/entity"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/repository"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/io"
+        errs "github.com/pkg/errors"
+)
+
+const status = 2
+
+type DrillRepo struct {
+        database *io.SQLDatabase
+}
+
+var _ repository.IDrillRepository = (*DrillRepo)(nil)
+
+func NewDrillRepository(db *io.SQLDatabase) *DrillRepo <span class="cov1" title="1">{
+        return &amp;DrillRepo{
+                database: db,
+        }
+}</span>
+
+func (d *DrillRepo) GetDrill(unitId string) (entity.Drill, error) <span class="cov10" title="4">{
+        var drill entity.Drill
+        query := `
+                SELECT
+                        id,
+                        is_random,
+                        title,
+                        questions
+                FROM
+                        m_drills
+                WHERE
+                        unit_id = ? AND
+                        status = ?
+                ORDER BY
+                        id DESC
+                limit 1;
+        `
+
+        stmtout, err := d.database.Prepare(query)
+        if err != nil </span><span class="cov0" title="0">{
+                return drill, errs.WithStack(err)
+        }</span>
+        <span class="cov10" title="4">defer stmtout.Close()
+
+        var q []byte
+
+        err = stmtout.QueryRow(unitId, status).Scan(&amp;drill.Id, &amp;drill.IsRandom, &amp;drill.Title, &amp;q)
+        if err != nil </span><span class="cov5" title="2">{
+                return drill, errs.WithStack(err)
+        }</span>
+        <span class="cov5" title="2">var qs []*entity.Question
+        err = json.Unmarshal(q, &amp;qs)
+        if err != nil </span><span class="cov0" title="0">{
+                return drill, errs.WithStack(err)
+        }</span>
+        <span class="cov5" title="2">drill.Questions = qs
+
+        return drill, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package persistence
+
+import (
+        "database/sql"
+        "strings"
+
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/model"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/repository"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/io"
+        errs "github.com/pkg/errors"
+)
+
+type FileRepository struct {
+        database *io.SQLDatabase
+}
+
+var _ repository.IFileRepository = (*FileRepository)(nil)
+
+func NewFileRepository(db *io.SQLDatabase) *FileRepository <span class="cov0" title="0">{
+        return &amp;FileRepository{
+                database: db,
+        }
+}</span>
+
+func (r FileRepository) ListFilesByFileIDs(fileIDs []interface{}) (map[string][]*model.File, error) <span class="cov0" title="0">{
+        if len(fileIDs) == 0 </span><span class="cov0" title="0">{
+                return nil, nil
+        }</span>
+
+        <span class="cov0" title="0">query := `
+SELECT
+        id,
+        name,
+        content_type,
+        path
+FROM
+        m_files
+WHERE
+        id IN (?` + strings.Repeat(",?", len(fileIDs)-1) + `)
+ORDER BY
+        id;
+`
+        stmtOut, err := r.database.Prepare(query)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, errs.WithStack(err)
+        }</span>
+        <span class="cov0" title="0">defer stmtOut.Close()
+
+        rows, err := stmtOut.Query(fileIDs...)
+        if err != nil </span><span class="cov0" title="0">{
+                switch err </span>{
+                case sql.ErrNoRows:<span class="cov0" title="0">
+                        break</span>
+                default:<span class="cov0" title="0">
+                        return nil, errs.WithStack(err)</span>
+                }
+        }
+
+        <span class="cov0" title="0">files := make(map[string][]*model.File, len(fileIDs))
+        for rows.Next() </span><span class="cov0" title="0">{
+                var file model.File
+                err = rows.Scan(&amp;file.ID, &amp;file.Name, &amp;file.ContentType, &amp;file.Path)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, errs.WithStack(err)
+                }</span>
+
+                <span class="cov0" title="0">files[file.ID] = append(files[file.ID], &amp;file)</span>
+        }
+        <span class="cov0" title="0">if err = rows.Err(); err != nil </span><span class="cov0" title="0">{
+                return nil, errs.WithStack(err)
+        }</span>
+
+        <span class="cov0" title="0">return files, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package persistence
+
+import (
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/repository"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/io"
+)
+
+type Repositories struct {
+        Course       repository.ICourseRepository
+        SchoolCourse repository.ISchoolCourseRepository
+        SchoolRubric repository.ISchoolRubricRepository
+        File         repository.IFileRepository
+        Drill        repository.IDrillRepository
+}
+
+func NewRepositories(db *io.SQLDatabase) (*Repositories, error) <span class="cov0" title="0">{
+        return &amp;Repositories{
+                Course:       NewCourseRepository(db),
+                SchoolCourse: NewSchoolCourseRepository(db),
+                SchoolRubric: NewSchoolRubricRepository(db),
+                File:         NewFileRepository(db),
+                Drill:        NewDrillRepository(db),
+        }, nil
+}</span>
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package persistence
+
+import (
+        "strings"
+
+        errs "github.com/pkg/errors"
+
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/model"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/repository"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/io"
+)
+
+type SchoolCourseRepository struct {
+        database *io.SQLDatabase
+}
+
+var _ repository.ISchoolCourseRepository = (*SchoolCourseRepository)(nil)
+
+func NewSchoolCourseRepository(db *io.SQLDatabase) *SchoolCourseRepository <span class="cov0" title="0">{
+        return &amp;SchoolCourseRepository{
+                database: db,
+        }
+}</span>
+
+func (r SchoolCourseRepository) ListSchoolCoursesByCourseIDs(courseIDs []interface{}) (map[string][]*model.SchoolCourse, error) <span class="cov0" title="0">{
+        query := `
+SELECT
+        id,
+        course_id
+FROM
+        t_school_courses
+WHERE
+        status != 0
+        AND
+        course_id IN (?` + strings.Repeat(",?", len(courseIDs)-1) + `)
+ORDER BY
+        id;
+`
+        stmtOut, err := r.database.Prepare(query)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, errs.WithStack(err)
+        }</span>
+        <span class="cov0" title="0">defer stmtOut.Close()
+
+        rows, err := stmtOut.Query(courseIDs...)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, errs.WithStack(err)
+        }</span>
+
+        <span class="cov0" title="0">schoolCourses := make(map[string][]*model.SchoolCourse, len(courseIDs))
+        for rows.Next() </span><span class="cov0" title="0">{
+                var schoolCourse model.SchoolCourse
+                err = rows.Scan(&amp;schoolCourse.ID, &amp;schoolCourse.CourseID)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, errs.WithStack(err)
+                }</span>
+
+                <span class="cov0" title="0">schoolCourses[schoolCourse.CourseID] = append(schoolCourses[schoolCourse.CourseID], &amp;schoolCourse)</span>
+        }
+        <span class="cov0" title="0">if err = rows.Err(); err != nil </span><span class="cov0" title="0">{
+                return nil, errs.WithStack(err)
+        }</span>
+
+        <span class="cov0" title="0">return schoolCourses, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package persistence
+
+import (
+        "encoding/json"
+        "strings"
+
+        errs "github.com/pkg/errors"
+
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/model"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/domain/repository"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/io"
+)
+
+type SchoolRubricRepository struct {
+        database *io.SQLDatabase
+}
+
+var _ repository.ISchoolRubricRepository = (*SchoolRubricRepository)(nil)
+
+func NewSchoolRubricRepository(db *io.SQLDatabase) *SchoolRubricRepository <span class="cov0" title="0">{
+        return &amp;SchoolRubricRepository{
+                database: db,
+        }
+}</span>
+
+func (r SchoolRubricRepository) ListSchoolRubricsBySchoolCourseIDs(schoolCourseIDs []interface{}) (map[string][]*model.SchoolRubric, error) <span class="cov0" title="0">{
+        query := `
+SELECT
+        id,
+        school_course_id,
+        sequence,
+        items,
+        name,
+        badge_file_id
+FROM
+        t_school_rubrics
+WHERE
+        school_course_id IN (?` + strings.Repeat(",?", len(schoolCourseIDs)-1) + `)
+ORDER BY
+        id;
+`
+
+        stmtOut, err := r.database.Prepare(query)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, errs.WithStack(err)
+        }</span>
+        <span class="cov0" title="0">defer stmtOut.Close()
+
+        rows, err := stmtOut.Query(schoolCourseIDs...)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, errs.WithStack(err)
+        }</span>
+
+        <span class="cov0" title="0">schoolRubrics := make(map[string][]*model.SchoolRubric, len(schoolCourseIDs))
+        for rows.Next() </span><span class="cov0" title="0">{
+                var (
+                        schoolRubric    model.SchoolRubric
+                        itemsJSONString string
+                )
+                err := rows.Scan(&amp;schoolRubric.ID, &amp;schoolRubric.SchoolCourseID, &amp;schoolRubric.Sequence, &amp;itemsJSONString, &amp;schoolRubric.Name, &amp;schoolRubric.BadgeFileID)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, errs.WithStack(err)
+                }</span>
+                <span class="cov0" title="0">if err := json.Unmarshal([]byte(itemsJSONString), &amp;schoolRubric.Items); err != nil </span><span class="cov0" title="0">{
+                        return nil, errs.WithStack(err)
+                }</span>
+
+                <span class="cov0" title="0">schoolRubrics[schoolRubric.SchoolCourseID] = append(schoolRubrics[schoolRubric.SchoolCourseID], &amp;schoolRubric)</span>
+        }
+        <span class="cov0" title="0">if err = rows.Err(); err != nil </span><span class="cov0" title="0">{
+                return nil, errs.WithStack(err)
+        }</span>
+
+        <span class="cov0" title="0">return schoolRubrics, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package server
+
+import (
+        "net/http"
+
+        gqlHandler "github.com/99designs/gqlgen/graphql/handler"
+        "github.com/99designs/gqlgen/graphql/playground"
+
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/graph/loader"
+        "github.com/Fantamstick/srn-ibl-student-server/pkg/handler/rest"
+)
+
+func NewRouter(
+        restHandler *rest.Handlers,
+        gqlHandler *gqlHandler.Server,
+        loaders *loader.Loaders,
+) *http.ServeMux <span class="cov8" title="1">{
+        mux := http.NewServeMux()
+
+        // Common
+        mux.Handle("/healthz", healthCheckHandler())
+
+        // REST
+        // TODO: REST処理が入ったらこちらに追加
+
+        // GraphQL
+        mux.Handle("/query", loader.DataLoaderMiddleware(loaders, gqlHandler))
+        // TODO: 実装時の動作確認用に一時追加中
+        mux.Handle("/", playground.Handler("GraphQL playground", "/query"))
+
+        return mux
+}</span>
+
+func healthCheckHandler() http.Handler <span class="cov8" title="1">{
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusOK)
+        }</span>)
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
